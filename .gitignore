@@ -6,3 +6,6 @@ personal.txt
 
 # later we will remove .env too
 .env.production
+
+#remove env
+.env
