@@ -8,7 +8,7 @@ const Comment = require("../models/commentModel");
 
 dotenv.config();
 
-const MONGO_URI_LOCAL = process.env.MONGO_URI_LOCAL || "mongodb://localhost:27017/social-media-api";
+const MONGO_URI_LOCAL = process.env.MONGO_URI_LOCAL;
 
 // Sample data arrays
 const usernames = [
@@ -109,7 +109,10 @@ const commentTexts = [
 
 const seed = async () => {
   try {
-    await mongoose.connect(MONGO_URI_LOCAL);
+    await mongoose.connect(MONGO_URI_LOCAL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     console.log("Connected to MongoDB");
 
     // Clear old data
@@ -126,12 +129,12 @@ const seed = async () => {
     // Create users
     console.log("Creating users...");
     const users = [];
-    
+
     for (let i = 0; i < usernames.length; i++) {
       const username = usernames[i];
       const role = (username === "admin" || username === "moderator") ? "admin" : "user";
       const bio = i < bios.length ? bios[i] : `Hi! I'm ${username} 👋`;
-      
+
       const user = await User.create({
         username,
         email: `${username}@example.com`,
@@ -139,7 +142,7 @@ const seed = async () => {
         role,
         bio
       });
-      
+
       users.push(user);
     }
 
@@ -148,22 +151,22 @@ const seed = async () => {
     // Create realistic follow relationships
     console.log("Setting up follow relationships...");
     const regularUsers = users.filter(u => u.role === "user");
-    
+
     for (let i = 0; i < regularUsers.length; i++) {
       const user = regularUsers[i];
       const followCount = Math.floor(Math.random() * 8) + 3; // 3-10 follows per user
-      
+
       // Get random users to follow (excluding self)
       const otherUsers = regularUsers.filter(u => u._id.toString() !== user._id.toString());
       const toFollow = otherUsers.sort(() => 0.5 - Math.random()).slice(0, followCount);
-      
+
       for (const followUser of toFollow) {
         // Add to following
         if (!user.following.includes(followUser._id)) {
           user.following.push(followUser._id);
           user.followingCount += 1;
         }
-        
+
         // Add to followers
         if (!followUser.followers.includes(user._id)) {
           followUser.followers.push(user._id);
@@ -179,19 +182,19 @@ const seed = async () => {
     // Create posts
     console.log("Creating posts...");
     const posts = [];
-    
+
     // Each user creates 2-5 posts
     for (const user of users) {
       const postCount = Math.floor(Math.random() * 4) + 2; // 2-5 posts per user
-      
+
       for (let i = 0; i < postCount; i++) {
         const randomText = postTexts[Math.floor(Math.random() * postTexts.length)];
-        
+
         const post = await Post.create({
           authorName: user._id,
           text: randomText
         });
-        
+
         posts.push(post);
       }
     }
@@ -206,7 +209,7 @@ const seed = async () => {
         .filter(u => u._id.toString() !== post.authorName.toString()) // Can't like own post
         .sort(() => 0.5 - Math.random())
         .slice(0, likeCount);
-      
+
       post.likes = usersToLike.map(u => u._id);
       await post.save();
     }
@@ -216,29 +219,29 @@ const seed = async () => {
     // Create comments
     console.log("Creating comments...");
     const comments = [];
-    
+
     for (const post of posts) {
       const commentCount = Math.floor(Math.random() * 8) + 1; // 1-8 comments per post
-      
+
       for (let i = 0; i < commentCount; i++) {
         // Random user comments (excluding post author sometimes for variety)
-        const availableUsers = Math.random() > 0.3 
+        const availableUsers = Math.random() > 0.3
           ? users.filter(u => u._id.toString() !== post.authorName.toString())
           : users;
-        
+
         const randomUser = availableUsers[Math.floor(Math.random() * availableUsers.length)];
         const randomCommentText = commentTexts[Math.floor(Math.random() * commentTexts.length)];
-        
+
         const comment = await Comment.create({
           post: post._id,
           authorName: randomUser._id,
           text: randomCommentText
         });
-        
+
         post.comments.push(comment._id);
         comments.push(comment);
       }
-      
+
       await post.save();
     }
 
@@ -254,14 +257,14 @@ const seed = async () => {
         "💡 New feature update: Dark mode is now available in settings!",
         "⚠️ Reminder: Please report any inappropriate content. We're here to keep this space safe for everyone."
       ];
-      
+
       for (let i = 0; i < adminPosts.length; i++) {
         const admin = adminUsers[i % adminUsers.length];
         const post = await Post.create({
           authorName: admin._id,
           text: adminPosts[i]
         });
-        
+
         // Admin posts get lots of likes
         post.likes = users.slice(0, Math.floor(users.length * 0.7)).map(u => u._id);
         await post.save();
@@ -299,7 +302,7 @@ const seed = async () => {
     process.exit(0);
   } catch (err) {
     console.error("❌ Seeding failed:", err);
-    try { await mongoose.disconnect(); } catch (e) {}
+    try { await mongoose.disconnect(); } catch (e) { }
     process.exit(1);
   }
 };
