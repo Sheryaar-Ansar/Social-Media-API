@@ -1,0 +1,783 @@
+{
+	"info": {
+		"_postman_id": "19c61703-f3d7-494c-91b4-b9aeb37261be",
+		"name": "Social-Media-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46823724"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"user@example.com\",\r\n    \"email\": \"user@example.com\",\r\n    \"password\": \"password123\",\r\n    \"role\": \"user\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/auth/register",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"admin@example.com\",\r\n    \"password\": \"password123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/auth/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProfile",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/users/profile",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateProfile",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"bio\": \"Professional CS2 Athlete at Navi ESPORTS\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/users/profile",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "viewOthersProfile",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/users/{{username}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "followToggle",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/follow/toggle/{{username}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"follow",
+						"toggle",
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createPost",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "text",
+							"value": "Wassup guys?",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "postman-cloud:///1f088f98-5cd3-4da0-a108-4e44e4fa5474"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/post",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllPost",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/post",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOnePost",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/post/{{postId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"post",
+						"{{postId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updatePost",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"text\": \"See this picture!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/post/{{postId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"post",
+						"{{postId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deletePost",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/post/{{postId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"post",
+						"{{postId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllPostOfUsers",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/post/users/{{username}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"post",
+						"users",
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getFeed",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/feed",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"feed"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "likeToggle",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/post/{{postId}}/like",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"post",
+						"{{postId}}",
+						"like"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createComment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"text\": \"Nice smooche ☺\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/post/{{postId}}/comments",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"post",
+						"{{postId}}",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getComment",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/post/{{postId}}/comments",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"post",
+						"{{postId}}",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getYourAllComments",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"text\": \"Nice pfp ♥\"\r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/post/comments",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"post",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteYourComment",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/posts/{{postId}}/comments/{{commentId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"posts",
+						"{{postId}}",
+						"comments",
+						"{{commentId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateYourComment",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"text\": \"Updated comment text here\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/posts/{{postId}}/comments/{{commentId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"posts",
+						"{{postId}}",
+						"comments",
+						"{{commentId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllUsers",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/admin/users?page={{page}}&limit={{limit}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "{{page}}"
+						},
+						{
+							"key": "limit",
+							"value": "{{limit}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteUser",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/admin/users/{{username}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"users",
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deletePost (Admin)",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/admin/posts/{{postId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"posts",
+						"{{postId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getStats",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/admin/stats",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getActiveUsers",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/admin/stats/active-users?days={{days}}&limit={{limit}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"stats",
+						"active-users"
+					],
+					"query": [
+						{
+							"key": "days",
+							"value": "{{days}}"
+						},
+						{
+							"key": "limit",
+							"value": "{{limit}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "adminDashboard",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/admin/dashboard",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"dashboard"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "username",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "postId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "commentId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "page",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "limit",
+			"value": "10",
+			"type": "string"
+		},
+		{
+			"key": "days",
+			"value": "7",
+			"type": "string"
+		}
+	]
+}
